@@ -1,0 +1,36 @@
+{
+  "name": "openclaw-manager",
+  "version": "2.0.0",
+  "description": "OpenClaw Manager - Unified application for managing OpenClaw instances",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build:core && npm run build:cli && npm run build:web",
+    "build:core": "cd packages/core && npm run build",
+    "build:cli": "cd packages/cli && npm run build",
+    "build:web": "cd packages/web && npm run build",
+    "start:web": "cd packages/web && npm run start",
+    "cli": "node packages/cli/dist/index.js"
+  },
+  "keywords": [
+    "openclaw",
+    "manager",
+    "ai",
+    "assistant"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/delankesita/openclaw-desktop.git"
+  }
+}
