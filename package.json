@@ -1,0 +1,28 @@
+{
+  "name": "openclaw-desktop",
+  "version": "1.0.0",
+  "description": "OpenClaw Desktop - Standalone application for managing OpenClaw instances",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:core": "pnpm --filter @openclaw/desktop-core build",
+    "build:cli": "pnpm --filter @openclaw/desktop-cli build",
+    "build:web": "pnpm --filter @openclaw/desktop-web build",
+    "build:electron": "pnpm --filter @openclaw/desktop-electron build",
+    "dev:cli": "pnpm --filter @openclaw/desktop-cli dev",
+    "dev:web": "pnpm --filter @openclaw/desktop-web dev",
+    "start:web": "pnpm --filter @openclaw/desktop-web start",
+    "start:electron": "pnpm --filter @openclaw/desktop-electron start"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@8.0.0"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@openclaw/desktop-electron",
+  "version": "1.0.0",
+  "description": "OpenClaw Desktop Electron App",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "electron ."
+  },
+  "dependencies": {
+    "@openclaw/desktop-core": "file:../core"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@openclaw/desktop-cli",
+  "version": "1.0.0",
+  "description": "OpenClaw Desktop CLI Tool",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "openclaw-desktop": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@openclaw/desktop-core": "file:../core"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}
