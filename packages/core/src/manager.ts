@@ -289,6 +289,23 @@ export class OpenClawManager {
   // ==================== Getters ====================
 
   getInstances(): Instance[] {
+    const instances = this.config.getInstances();
+    // 同步检测运行状态（通过检查端口连接）
+    // 使用 curl 或 nc 来快速检测端口
+    const { execSync } = require('child_process');
+    for (const instance of instances) {
+      try {
+        // 使用 curl 发送 HEAD 请求，超时 1 秒
+        execSync(`curl -s -m 1 -o /dev/null -w "%{http_code}" http://localhost:${instance.port}/health 2>/dev/null || true`, {
+          timeout: 2000,
+          encoding: 'utf-8'
+        });
+        // 如果能连接到端口（无论返回什么 HTTP 状态码），说明实例正在运行
+        this.config.setInstanceStatus(instance.id, InstanceStatus.Running);
+      } catch {
+        // 无法连接或超时，保持原状态
+      }
+    }
     return this.config.getInstances();
   }
 

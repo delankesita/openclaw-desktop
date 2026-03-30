@@ -1,9 +1,26 @@
 /**
  * OpenClaw Manager - Instance Templates
- * 8 pre-configured templates for different use cases
+ * 13 pre-configured templates for different use cases
  */
 
 import { InstanceTemplate } from './types';
+
+// 支持的渠道类型定义
+export const SUPPORTED_CHANNELS = {
+  // 国外主流通讯办公软件
+  telegram: { name: 'Telegram', icon: '📱', region: 'international' },
+  discord: { name: 'Discord', icon: '🎮', region: 'international' },
+  whatsapp: { name: 'WhatsApp', icon: '💬', region: 'international' },
+  slack: { name: 'Slack', icon: '💼', region: 'international' },
+  imessage: { name: 'iMessage', icon: '🍎', region: 'international' },
+  line: { name: 'LINE', icon: '💚', region: 'international' },
+  twitch: { name: 'Twitch', icon: '📺', region: 'international' },
+  // 国内主流通讯办公软件
+  feishu: { name: '飞书', icon: '🪿', region: 'china' },
+  dingtalk: { name: '钉钉', icon: '📌', region: 'china' },
+  wecom: { name: '企业微信', icon: '🏢', region: 'china' },
+  wechat: { name: '微信', icon: '💚', region: 'china' },
+} as const;
 
 export const templates: InstanceTemplate[] = [
   {
@@ -37,7 +54,7 @@ export const templates: InstanceTemplate[] = [
   {
     id: 'chatbot',
     name: 'Chatbot Shrimp',
-    description: 'Optimized for conversational AI with messaging channels',
+    description: 'Optimized for conversational AI with messaging channels (Feishu, DingTalk)',
     category: 'production',
     icon: '💬',
     config: {
@@ -46,7 +63,95 @@ export const templates: InstanceTemplate[] = [
       tools: { profile: 'messaging' }
     },
     channels: ['feishu', 'dingtalk'],
-    tags: ['chatbot', 'messaging', 'production']
+    tags: ['chatbot', 'messaging', 'production', 'china']
+  },
+  {
+    id: 'multichannel',
+    name: 'Multi-Channel Shrimp',
+    description: 'International channels: Telegram, Discord, WhatsApp, Slack, LINE',
+    category: 'production',
+    icon: '🌐',
+    config: {
+      gateway: { mode: 'local' },
+      agents: { defaults: { maxConcurrent: 20 }, list: [{ id: 'main' }] },
+      tools: { profile: 'messaging' }
+    },
+    channels: ['telegram', 'discord', 'whatsapp', 'slack', 'line'],
+    tags: ['chatbot', 'messaging', 'production', 'international', 'multichannel']
+  },
+  {
+    id: 'global-messenger',
+    name: 'Global Messenger Shrimp',
+    description: 'All major international platforms: Telegram, Discord, WhatsApp, Slack, iMessage, LINE, Twitch',
+    category: 'production',
+    icon: '🌍',
+    config: {
+      gateway: { mode: 'local' },
+      agents: { 
+        defaults: { maxConcurrent: 30 }, 
+        list: [{ id: 'main' }] 
+      },
+      tools: { profile: 'messaging' }
+    },
+    channels: ['telegram', 'discord', 'whatsapp', 'slack', 'imessage', 'line', 'twitch'],
+    tags: ['chatbot', 'messaging', 'production', 'international', 'global', 'all-platforms']
+  },
+  {
+    id: 'china-messenger',
+    name: 'China Messenger Shrimp',
+    description: 'All major China platforms: Feishu, DingTalk, WeCom, WeChat',
+    category: 'production',
+    icon: '🇨🇳',
+    config: {
+      gateway: { mode: 'local' },
+      agents: { 
+        defaults: { maxConcurrent: 20 }, 
+        list: [{ id: 'main' }] 
+      },
+      tools: { profile: 'messaging' }
+    },
+    channels: ['feishu', 'dingtalk', 'wecom', 'wechat'],
+    tags: ['chatbot', 'messaging', 'production', 'china', 'all-platforms']
+  },
+  {
+    id: 'telegram-bot',
+    name: 'Telegram Bot Shrimp',
+    description: 'Optimized for Telegram with groups, topics and streaming support',
+    category: 'production',
+    icon: '📱',
+    config: {
+      gateway: { mode: 'local' },
+      agents: { 
+        defaults: { 
+          maxConcurrent: 10,
+          groupChat: { mentionPatterns: ['@bot'] }
+        }, 
+        list: [{ id: 'main' }] 
+      },
+      tools: { profile: 'messaging' }
+    },
+    channels: ['telegram'],
+    tags: ['chatbot', 'messaging', 'production', 'telegram', 'international']
+  },
+  {
+    id: 'discord-bot',
+    name: 'Discord Bot Shrimp',
+    description: 'Optimized for Discord with threads, channels and guild support',
+    category: 'production',
+    icon: '🎮',
+    config: {
+      gateway: { mode: 'local' },
+      agents: { 
+        defaults: { 
+          maxConcurrent: 10,
+          groupChat: { mentionPatterns: ['@bot', '<@bot>'] }
+        }, 
+        list: [{ id: 'main' }] 
+      },
+      tools: { profile: 'messaging' }
+    },
+    channels: ['discord'],
+    tags: ['chatbot', 'messaging', 'production', 'discord', 'international', 'gaming']
   },
   {
     id: 'research',

@@ -161,11 +161,7 @@ export class ProcessManager {
       lastCheck: new Date()
     };
 
-    if (instance.status !== InstanceStatus.Running) {
-      health.message = 'Instance not running';
-      return health;
-    }
-
+    // 直接尝试连接健康检查端点，不依赖内存中的状态
     try {
       const { data } = await httpGet(`http://localhost:${instance.port}/health`, 5000);
       if (data) {
@@ -173,10 +169,14 @@ export class ProcessManager {
         health.cpu = (data.cpu as number) || 0;
         health.memory = (data.memory as number) || 0;
         health.uptime = (data.uptime as number) || 0;
+        // 更新实例状态为运行中
+        this.config.setInstanceStatus(instance.id, InstanceStatus.Running);
       }
     } catch {
       health.status = 'error';
       health.message = 'Connection failed';
+      // 更新实例状态为已停止
+      this.config.setInstanceStatus(instance.id, InstanceStatus.Stopped);
     }
 
     this.config.setInstanceHealth(instance.id, health);
